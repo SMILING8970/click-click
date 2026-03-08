@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>I'm Sorry</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    text-align:center;
+    background:#fff5f5;
+}
+
+h1{
+    margin-top:20px;
+}
+
+#puzzleArea{
+    width:400px;
+    height:400px;
+    margin:auto;
+    position:relative;
+}
+
+.piece{
+    width:100px;
+    height:100px;
+    position:absolute;
+    background-image:url("puzzle.jpg");
+    background-size:400px 400px;
+    border:1px solid #333;
+    cursor:grab;
+}
+
+#question{
+    display:none;
+    margin-top:40px;
+}
+
+button{
+    padding:12px 25px;
+    font-size:16px;
+    margin:10px;
+    cursor:pointer;
+}
+
+#videoPopup{
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+
+</style>
+
+</head>
+<body>
+
+<h1>Solve this first 🙂</h1>
+
+<div id="puzzleArea"></div>
+
+<div id="question">
+<h2>Have you forgiven me?</h2>
+
+<button onclick="showVideo()">Yes</button>
+<button id="noBtn">No</button>
+
+</div>
+
+<div id="videoPopup">
+
+<h3>I truly am sorry.</h3>
+
+<video width="400" controls autoplay>
+<source src="apology.mp4" type="video/mp4">
+</video>
+
+<p>You mean a lot to me.</p>
+
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+
+const size=4;
+const pieceSize=100;
+
+const puzzleArea=document.getElementById("puzzleArea");
+
+let pieces=[];
+let correct=0;
+
+for(let y=0;y<size;y++){
+for(let x=0;x<size;x++){
+
+let piece=document.createElement("div");
+
+piece.className="piece";
+
+piece.style.backgroundPosition= `-${x*pieceSize}px -${y*pieceSize}px`;
+
+piece.dataset.correctX=x*pieceSize;
+piece.dataset.correctY=y*pieceSize;
+
+piece.style.left=Math.random()*300+"px";
+piece.style.top=Math.random()*300+"px";
+
+dragElement(piece);
+
+puzzleArea.appendChild(piece);
+
+pieces.push(piece);
+
+}
+}
+
+function dragElement(el){
+
+let offsetX,offsetY;
+
+el.onmousedown=function(e){
+
+offsetX=e.offsetX;
+offsetY=e.offsetY;
+
+document.onmousemove=function(e){
+
+el.style.left=(e.pageX-puzzleArea.offsetLeft-offsetX)+"px";
+el.style.top=(e.pageY-puzzleArea.offsetTop-offsetY)+"px";
+
+}
+
+document.onmouseup=function(){
+
+document.onmousemove=null;
+
+snap(el);
+
+}
+
+}
+
+}
+
+function snap(el){
+
+let x=Math.round(parseInt(el.style.left)/pieceSize)*pieceSize;
+let y=Math.round(parseInt(el.style.top)/pieceSize)*pieceSize;
+
+if(Math.abs(x-el.dataset.correctX)<20 && Math.abs(y-el.dataset.correctY)<20){
+
+el.style.left=el.dataset.correctX+"px";
+el.style.top=el.dataset.correctY+"px";
+el.onmousedown=null;
+
+correct++;
+
+if(correct===size*size){
+
+completePuzzle();
+
+}
+
+}
+
+}
+
+function completePuzzle(){
+
+startConfetti();
+
+setTimeout(()=>{
+
+document.getElementById("question").style.display="block";
+
+},1500)
+
+}
+
+const noBtn=document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover",function(){
+
+const x=Math.random()*300;
+const y=Math.random()*200;
+
+noBtn.style.position="absolute";
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+
+});
+
+function showVideo(){
+
+document.getElementById("videoPopup").style.display="block";
+
+}
+
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let confetti=[];
+
+function startConfetti(){
+
+for(let i=0;i<150;i++){
+
+confetti.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height-500,
+size:Math.random()*8+2,
+speed:Math.random()*3+2
+
+});
+
+}
+
+animate();
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+confetti.forEach(c=>{
+
+ctx.fillStyle="red";
+ctx.fillRect(c.x,c.y,c.size,c.size);
+
+c.y+=c.speed;
+
+});
+
+requestAnimationFrame(animate);
+
+}
+
+</script>
+
+</body>
+</html>
