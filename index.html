@@ -139,6 +139,14 @@ text-align:center;
 width:400px;
 }
 
+#pieceContainer{
+width:700px;
+height:200px;
+margin:auto;
+position:relative;
+margin-bottom:30px;
+}
+
 
 #videoPopup h3,
 #noPopup h3,
@@ -153,6 +161,8 @@ width:400px;
 <body>
 
 <h1>Solve this first bb 😜 😉</h1>
+
+<div id="pieceContainer"></div>
 
 <div id="puzzleArea"></div>
 
@@ -251,7 +261,8 @@ for(let x=0;x<size;x++){
 let piece=document.createElement("div");
 
 piece.className="piece";
-
+piece.style.left = Math.random()*600 + "px";
+piece.style.top = Math.random()*150 + "px";
 piece.style.backgroundPosition= `-${x*pieceSize}px -${y*pieceSize}px`;
 
 piece.dataset.correctX=x*pieceSize;
@@ -281,7 +292,7 @@ if(side===3){
 
 dragElement(piece);
 
-puzzleArea.appendChild(piece);
+document.getElementById("pieceContainer").appendChild(piece);
 
 pieces.push(piece);
 
