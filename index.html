@@ -142,11 +142,11 @@ width:400px;
 #pieceContainer{
 width:700px;
 height:200px;
-margin:auto;
+margin:40px auto;
 position:relative;
-margin-bottom:30px;
+border:2px dashed rgba(0,0,0,0.2);
+border-radius:12px;
 }
-
 
 #videoPopup h3,
 #noPopup h3,
@@ -261,8 +261,7 @@ for(let x=0;x<size;x++){
 let piece=document.createElement("div");
 
 piece.className="piece";
-piece.style.left = Math.random()*600 + "px";
-piece.style.top = Math.random()*150 + "px";
+    
 piece.style.backgroundPosition= `-${x*pieceSize}px -${y*pieceSize}px`;
 
 piece.dataset.correctX=x*pieceSize;
