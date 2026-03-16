@@ -24,6 +24,7 @@ h1{
     background:#eaf4ff;
     border-radius:12px;
     box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    overflow:visible;
 }
 .piece{
     width:100px;
@@ -256,8 +257,27 @@ piece.style.backgroundPosition= `-${x*pieceSize}px -${y*pieceSize}px`;
 piece.dataset.correctX=x*pieceSize;
 piece.dataset.correctY=y*pieceSize;
 
-piece.style.left=Math.random()*300+"px";
-piece.style.top=Math.random()*300+"px";
+let side = Math.floor(Math.random()*4);
+
+if(side===0){ 
+    piece.style.left = -120 + "px";
+    piece.style.top = Math.random()*350 + "px";
+}
+
+if(side===1){
+    piece.style.left = 420 + "px";
+    piece.style.top = Math.random()*350 + "px";
+}
+
+if(side===2){
+    piece.style.left = Math.random()*350 + "px";
+    piece.style.top = -120 + "px";
+}
+
+if(side===3){
+    piece.style.left = Math.random()*350 + "px";
+    piece.style.top = 420 + "px";
+}
 
 dragElement(piece);
 
