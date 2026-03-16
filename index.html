@@ -139,14 +139,6 @@ text-align:center;
 width:400px;
 }
 
-#pieceContainer{
-width:700px;
-height:200px;
-margin:40px auto;
-position:relative;
-border:2px dashed rgba(0,0,0,0.2);
-border-radius:12px;
-}
 
 #videoPopup h3,
 #noPopup h3,
@@ -161,8 +153,6 @@ border-radius:12px;
 <body>
 
 <h1>Solve this first bb 😜 😉</h1>
-
-<div id="pieceContainer"></div>
 
 <div id="puzzleArea"></div>
 
@@ -267,12 +257,12 @@ piece.style.backgroundPosition= `-${x*pieceSize}px -${y*pieceSize}px`;
 piece.dataset.correctX=x*pieceSize;
 piece.dataset.correctY=y*pieceSize;
 
-piece.style.left = Math.random()*600 + "px";
-piece.style.top = Math.random()*180 + "px";
+piece.style.left = Math.random()*300 + "px";
+piece.style.top = Math.random()*300 + "px";
 
 dragElement(piece);
 
-document.getElementById("pieceContainer").appendChild(piece);
+puzzleArea.appendChild(piece);
 
 pieces.push(piece);
 
@@ -290,11 +280,8 @@ offsetY=e.offsetY;
 
 document.onmousemove=function(e){
 
-const rect = document.getElementById("pieceContainer").getBoundingClientRect();
-
-el.style.left = (e.clientX - rect.left - offsetX) + "px";
-el.style.top = (e.clientY - rect.top - offsetY) + "px";
-}
+el.style.left=(e.pageX-puzzleArea.offsetLeft-offsetX)+"px";
+el.style.top=(e.pageY-puzzleArea.offsetTop-offsetY)+"px";
 
 document.onmouseup=function(){
 
