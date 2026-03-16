@@ -50,10 +50,19 @@ h1{
 }
 
 button{
-    padding:12px 25px;
+    padding:12px 24px;
     font-size:16px;
     margin:10px;
     cursor:pointer;
+    border:none;
+    border-radius:8px;
+    background:#9ecbff;
+    color:#1b2b40;
+    transition:0.2s;
+}
+
+button:hover{
+    background:#86bbf7;
 }
 
 #videoPopup{
@@ -75,6 +84,18 @@ canvas{
     pointer-events:none;
 }
 
+#noPopup{
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    text-align:center;
+}
 </style>
 
 </head>
@@ -88,6 +109,18 @@ canvas{
 <h2>Did you forgive me.. 🥺</h2>
 
 <button onclick="showVideo()">Yes</button>
+
+<div id="noPopup">
+
+<h3>Please reconsider 🥺</h3>
+
+<img src="please.png" width="250">
+
+<p>I really am sorry. Can we try again?</p>
+
+<button onclick="closeNoPopup()">Okay</button>
+
+</div>
 <button id="noBtn">No</button>
 
 </div>
@@ -223,17 +256,32 @@ document.getElementById("question").style.display="block";
 
 const noBtn=document.getElementById("noBtn");
 
-noBtn.addEventListener("mouseover",function(){
+noBtn.addEventListener("mouseover", moveButton);
 
-const x=Math.random()*300;
-const y=Math.random()*200;
+function moveButton(){
 
-noBtn.style.position="absolute";
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
+const maxX = window.innerWidth - 120;
+const maxY = window.innerHeight - 80;
+
+const x = Math.random() * maxX;
+const y = Math.random() * maxY;
+
+noBtn.style.position="fixed";
+noBtn.style.left = x + "px";
+noBtn.style.top = y + "px";
+
+}
+noBtn.addEventListener("click", function(){
+
+document.getElementById("noPopup").style.display="block";
 
 });
 
+function closeNoPopup(){
+
+document.getElementById("noPopup").style.display="none";
+
+}
 function showVideo(){
 
 document.getElementById("videoPopup").style.display="block";
