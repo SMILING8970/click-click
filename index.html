@@ -267,27 +267,8 @@ piece.style.backgroundPosition= `-${x*pieceSize}px -${y*pieceSize}px`;
 piece.dataset.correctX=x*pieceSize;
 piece.dataset.correctY=y*pieceSize;
 
-let side = Math.floor(Math.random()*4);
-
-if(side===0){ 
-    piece.style.left = -120 + "px";
-    piece.style.top = Math.random()*350 + "px";
-}
-
-if(side===1){
-    piece.style.left = 420 + "px";
-    piece.style.top = Math.random()*350 + "px";
-}
-
-if(side===2){
-    piece.style.left = Math.random()*350 + "px";
-    piece.style.top = -120 + "px";
-}
-
-if(side===3){
-    piece.style.left = Math.random()*350 + "px";
-    piece.style.top = 420 + "px";
-}
+piece.style.left = Math.random()*600 + "px";
+piece.style.top = Math.random()*180 + "px";
 
 dragElement(piece);
 
@@ -309,9 +290,10 @@ offsetY=e.offsetY;
 
 document.onmousemove=function(e){
 
-el.style.left=(e.pageX-puzzleArea.offsetLeft-offsetX)+"px";
-el.style.top=(e.pageY-puzzleArea.offsetTop-offsetY)+"px";
+const rect = document.getElementById("pieceContainer").getBoundingClientRect();
 
+el.style.left = (e.clientX - rect.left - offsetX) + "px";
+el.style.top = (e.clientY - rect.top - offsetY) + "px";
 }
 
 document.onmouseup=function(){
